@@ -1,0 +1,27 @@
+#Import de bibliotecas
+from urllib.request import Request, urlopen
+import json
+import pandas as pd
+
+#Link da API
+url = f"url descrita na documentação da API"
+
+#Header para autenticação
+header = {
+"login": "login descrito na documentação da API",
+"token": "token descrito na documentação da API",}
+
+#Acesso à API
+request = Request(url, headers = header)
+response = urlopen(request)
+
+#Tratamento do JSON retornado - Transformando o json em df
+apidata_raw = response.read()
+apidata_json = json.loads(apidata_raw)
+apidata_df = pd.json_normalize(apidata_json['new_df_data'])
+
+#Visualização do dataframe
+apidata_df
+
+# Filtrando um elemento de uma determinada coluna do novo df
+apidata_df[apidata_df['coluna de interesse'] == 'elemento da coluna a ser filtrado']
